@@ -92,7 +92,7 @@ namespace guice.reflection {
            return instance;
         }
 
-        public TypeDefinition( Type type ) {
+        public TypeDefinition( dynamic type ) {
             if (type == null) {
                 throw new JsError("Cannot build class injection of primitives not supported at this time ");
             }
