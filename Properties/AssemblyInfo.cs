@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using SharpKit.JavaScript;
 
@@ -36,6 +35,5 @@ using SharpKit.JavaScript;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
-[assembly: JsType(OmitCasts = true)]
-
 [assembly: JsExport(GenerateSourceMaps = false)]
+[assembly: JsType(JsMode.Prototype, OmitCasts = true)]

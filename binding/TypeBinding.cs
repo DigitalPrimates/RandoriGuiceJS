@@ -16,7 +16,6 @@
  * 
  * @author Michael Labriola <labriola@digitalprimates.net>
  */
-using System;
 using SharpKit.JavaScript;
 using guice.reflection;
 
@@ -32,7 +31,7 @@ namespace guice.binding {
         }
 
         override public object provide(Injector injector) {
-            return injector.buildClass(dependencyDefinition.type);
+            return injector.buildClass(dependencyDefinition);
         }
 
         public TypeBinding(TypeDefinition typeDefinition, TypeDefinition dependencyDefinition) {

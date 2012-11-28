@@ -28,7 +28,8 @@ namespace guice.reflection {
     public class InjectionPoint {
         public JsString n; //name
         public JsString t; //type as string
-        public bool r; //is it required
+        public bool r; //is it required (1 or 0, we only care if it says 0)
+        public dynamic v; //value, if it was given a default, only considered when r=0
     }
 
     [JsType(JsMode.Prototype)]

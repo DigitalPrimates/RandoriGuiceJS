@@ -22,8 +22,8 @@ using guice.reflection;
 
 namespace guice.binding {
 
-    [JsType(JsMode.Prototype, Export = true)]
-    public enum Scope { Instance=0, Singleton=1 };
+    [JsType(JsMode.Json)]
+    public enum Scope { INSTANCE, SINGLETON };
 
     [JsType(JsMode.Prototype)]
     public abstract class Binding {
@@ -64,7 +64,7 @@ namespace guice.binding {
         }
 
         Binding withDecoration( Binding binding ) {
-            if (scope == Scope.Singleton) {
+            if (scope == Scope.SINGLETON) {
                 binding = new SingletonDecorator(binding);
             }
 

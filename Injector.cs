@@ -41,16 +41,15 @@ namespace guice {
 
         //Entry point for TypeBinding to ask for a class.... 
         //This method does so without trying to resolve the class first, which is important if we are called from within a resolution
-        public object buildClass(Type dependency) {
-            TypeDefinition type = dependency.As<TypeDefinition>();
+        public object buildClass(TypeDefinition typeDefinition) {
             JsArray<InjectionPoint> constructorPoints;
             JsArray<InjectionPoint> fieldPoints;
             object instance;
 
-            constructorPoints = type.getConstructorParameters();
-            instance = buildFromInjectionInfo(type, constructorPoints);
+            constructorPoints = typeDefinition.getConstructorParameters();
+            instance = buildFromInjectionInfo(typeDefinition, constructorPoints);
 
-            fieldPoints = type.getInjectionFields();
+            fieldPoints = typeDefinition.getInjectionFields();
             injectMembersFromInjectionInfo(instance, fieldPoints);
             //injectMembersMethods( built, type );
 
@@ -86,14 +85,14 @@ namespace guice {
             }
         }
 
-        object resolveDependency(TypeDefinition dependency) {
-            Binding binding = binder.getBinding(dependency);
+        object resolveDependency(TypeDefinition typeDefinition) {
+            Binding binding = binder.getBinding(typeDefinition);
             object instance;
 
             if (binding != null) {
                 instance = binding.provide(this);
             } else {
-                instance = buildClass(dependency.As<Type>());
+                instance = buildClass(typeDefinition);
             }
 
             return instance;

@@ -16,7 +16,6 @@
  * 
  * @author Michael Labriola <labriola@digitalprimates.net>
  */
-using System;
 using SharpKit.JavaScript;
 using guice.reflection;
 using guice.resolvers;
@@ -46,7 +45,7 @@ namespace guice {
             return instance;
         }
 
-        public InjectionClassBuilder(Injector injector, ClassResolver classResolver) {
+        public InjectionClassBuilder(Injector injector, ClassResolver classResolver=null) {
             this.injector = injector;
             this.classResolver = classResolver;
         }
