@@ -21,12 +21,10 @@ using guice.reflection;
 
 namespace guice.binding {
 
-    [JsType(JsMode.Prototype, OmitCasts = true)]
     public abstract class Provider {
         public abstract object get();
     }
 
-    [JsType(JsMode.Prototype)]
     public class ProviderBinding : Binding {
 
         readonly TypeDefinition typeDefinition;

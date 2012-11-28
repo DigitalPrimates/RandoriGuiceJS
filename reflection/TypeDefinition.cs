@@ -21,10 +21,10 @@ using SharpKit.JavaScript;
 
 namespace guice.reflection {
 
-    [JsType(JsMode.Prototype, OmitCasts = true)]
+    [JsType(JsMode.Json)]
     public enum InjectionTypes { Constructor, Property, Method, View };
 
-    [JsType(Export = false, OmitCasts = true)]
+    [JsType(JsMode.Prototype, OmitCasts = true, Export = false, Name = "Object")]
     public class InjectionPoint {
         public JsString n; //name
         public JsString t; //type as string
@@ -32,7 +32,6 @@ namespace guice.reflection {
         public dynamic v; //value, if it was given a default, only considered when r=0
     }
 
-    [JsType(JsMode.Prototype)]
     public class TypeDefinition {
 
         readonly dynamic _type;

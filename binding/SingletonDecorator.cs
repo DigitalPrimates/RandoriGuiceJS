@@ -21,7 +21,6 @@ using SharpKit.JavaScript;
 
 namespace guice.binding {
 
-    [JsType(JsMode.Prototype)]
     public class SingletonDecorator : Binding {
         readonly Binding sourceBinding;
         object instance;

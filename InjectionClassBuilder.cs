@@ -21,7 +21,7 @@ using guice.reflection;
 using guice.resolvers;
 
 namespace guice {
-    [JsType(JsMode.Prototype, NativeOverloads = false)]
+    [JsType(JsMode.Prototype, OmitCasts = true, NativeOverloads = false)]
     public class InjectionClassBuilder {
 
         readonly Injector injector;

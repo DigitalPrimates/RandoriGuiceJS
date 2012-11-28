@@ -22,7 +22,6 @@ using SharpKit.JavaScript;
 
 namespace guice.loader {
 
-    [JsType(JsMode.Prototype)]
     public class SynchronousClassLoader {
         readonly XMLHttpRequest xmlHttpRequest;
         readonly JsString dynamicClassBaseUrl;

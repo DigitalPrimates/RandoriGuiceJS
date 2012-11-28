@@ -18,19 +18,16 @@
  */
 
 using SharpKit.Html;
-using SharpKit.JavaScript;
 using guice.binding;
 using guice.loader;
 using guice.resolvers;
 
 namespace guice {
 
-    [JsType(JsMode.Prototype,OmitCasts = true)]
     public abstract class GuiceModule {
         public abstract void configure(Binder binder);
     }
 
-    [JsType(JsMode.Prototype)]
     public class GuiceJs {
 
         public Injector createInjector(GuiceModule module) {

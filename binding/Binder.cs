@@ -23,11 +23,10 @@ using guice.reflection;
 
 namespace guice.binding {
 
-    [JsType(JsMode.Prototype, Export = false, Name = "Object")]
+    [JsType(JsMode.Prototype, OmitCasts = true, Export = false, Name = "Object")]
     public class BindingHashMap : JsObject<Binding> {
     }
 
-    [JsType(JsMode.Prototype)]
     public class Binder {
         readonly BindingHashMap hashMap;
 

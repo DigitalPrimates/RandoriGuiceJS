@@ -21,7 +21,6 @@ using guice.reflection;
 
 namespace guice.binding {
 
-    [JsType(JsMode.Prototype)]
     public class TypeBinding : Binding {
         readonly TypeDefinition typeDefinition;
         readonly TypeDefinition dependencyDefinition;

@@ -24,7 +24,6 @@ using guice.reflection;
 
 namespace guice.resolvers {
 
-    [JsType(JsMode.Prototype)]
     public class ClassResolver {
         readonly SynchronousClassLoader loader;
 

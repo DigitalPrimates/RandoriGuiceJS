@@ -18,7 +18,6 @@
  */
 
 using System;
-using SharpKit.Html;
 using SharpKit.JavaScript;
 using guice.binding;
 using guice.reflection;
@@ -26,7 +25,7 @@ using guice.resolvers;
 
 namespace guice {
 
-    [JsType(JsMode.Prototype, NativeOverloads = false)]
+    [JsType(JsMode.Prototype, OmitCasts = true, NativeOverloads = false)]
     public class Injector {
         readonly Binder binder;
         readonly ClassResolver classResolver;

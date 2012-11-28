@@ -25,13 +25,11 @@ namespace guice.binding {
     [JsType(JsMode.Json)]
     public enum Scope { INSTANCE, SINGLETON };
 
-    [JsType(JsMode.Prototype)]
     public abstract class Binding {
         public abstract object provide(Injector injector);
         public abstract JsString getTypeName();
     }
 
-    [JsType(JsMode.Prototype)]
     public class BindingFactory {
         readonly Binder binder;
         readonly TypeDefinition typeDefinition;
