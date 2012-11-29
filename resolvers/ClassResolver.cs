@@ -57,7 +57,7 @@ namespace guice.resolvers {
             //\$Inherit\(net.digitalprimates.service.LabelService,([\w\W]*?)\)
             JsString inheritString = @"\$Inherit\(";
             inheritString += qualifiedClassName;
-            inheritString += @",([\w\W]*?)\)";
+            inheritString += @",\s*([\w\W]*?)\)";
             JsRegExpResult inheritResult = classDefinition.match(inheritString);
 
             //Do we inherit from anything?
@@ -89,6 +89,8 @@ namespace guice.resolvers {
 
         private void addDefinition( JsString definitionText ) {
             JsContext.JsCode(@" 
+var globalEval = (function () {
+
     var isIndirectEvalGlobal = (function (original, Object) {
         try {
             // Does `Object` resolve to a local variable, or to a global, built-in `Object`,
@@ -117,6 +119,9 @@ namespace guice.resolvers {
     }
 
     // otherwise, globalEval is `undefined` since nothing is returned
+})();
+
+globalEval(definitionText);
 ");
         }
 

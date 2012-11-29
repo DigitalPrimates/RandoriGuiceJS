@@ -36,10 +36,10 @@ namespace guice {
         [JsMethod(NativeParams=false)]
         public object buildClass(JsString className, params object[] list) {
             object instance;
-            TypeDefinition type = classResolver.resolveClassName( className );
+            TypeDefinition typeDefinition = classResolver.resolveClassName( className );
 
             //this feels like it needs to be refactored
-            instance = type.constructorApply(list);
+            instance = typeDefinition.constructorApply(list);
             injector.injectMembers(instance);
             
             return instance;

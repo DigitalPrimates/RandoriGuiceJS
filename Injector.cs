@@ -27,8 +27,8 @@ namespace guice {
 
     [JsType(JsMode.Prototype, OmitCasts = true, NativeOverloads = false)]
     public class Injector {
-        readonly Binder binder;
-        readonly ClassResolver classResolver;
+        readonly protected Binder binder;
+        readonly protected ClassResolver classResolver;
 
         public object getInstance( Type dependency ) {
             return resolveDependency( new TypeDefinition(dependency) );
@@ -36,6 +36,16 @@ namespace guice {
 
         public object getInstance(TypeDefinition dependencyTypeDefinition) {
             return resolveDependency(dependencyTypeDefinition);
+        }
+
+        internal virtual Binding getBinding( TypeDefinition typeDefinition ) {
+            return binder.getBinding( typeDefinition );
+        }
+
+        internal void configureBinder( GuiceModule module ) {
+            if ( module != null ) {
+                module.configure( binder );
+            }
         }
 
         //Entry point for TypeBinding to ask for a class.... 
@@ -65,14 +75,14 @@ namespace guice {
             injectMembersFromInjectionInfo(instance, fieldPoints);
         }
 
-        object buildFromInjectionInfo(TypeDefinition dependency, JsArray<InjectionPoint> constructorPoints) {
+        object buildFromInjectionInfo(TypeDefinition dependencyTypeDefinition, JsArray<InjectionPoint> constructorPoints) {
             JsArray<object> args = new JsArray<object>();
 
             for (int i = 0; i < constructorPoints.length; i++) {
                 args[i] = resolveDependency(classResolver.resolveClassName(constructorPoints[i].t));
             }
 
-            object obj = dependency.constructorApply(args);
+            object obj = dependencyTypeDefinition.constructorApply(args);
             return obj;
         }
 
@@ -85,7 +95,7 @@ namespace guice {
         }
 
         object resolveDependency(TypeDefinition typeDefinition) {
-            Binding binding = binder.getBinding(typeDefinition);
+            Binding binding = getBinding(typeDefinition);
             object instance;
 
             if (binding != null) {

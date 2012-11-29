@@ -18,6 +18,7 @@
  */
 
 using SharpKit.Html;
+using SharpKit.JavaScript;
 using guice.binding;
 using guice.loader;
 using guice.resolvers;
@@ -47,5 +48,11 @@ namespace guice {
 
             return injector;
         }
+
+        //This is a little evil and I am not sure I like it, but it is the best way we can provide bindings to a child injector for now.
+        public void configureInjector(Injector injector, GuiceModule module) {
+            injector.configureBinder( module );
+        }
+
     }
 }

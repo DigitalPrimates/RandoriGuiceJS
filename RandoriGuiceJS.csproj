@@ -48,6 +48,7 @@
     <Compile Include="binding\ProviderBinding.cs" />
     <Compile Include="binding\SingletonDecorator.cs" />
     <Compile Include="binding\TypeBinding.cs" />
+    <Compile Include="ChildInjector.cs" />
     <Compile Include="InjectionClassBuilder.cs" />
     <Compile Include="GuiceJS.cs" />
     <Compile Include="Injector.cs" />
