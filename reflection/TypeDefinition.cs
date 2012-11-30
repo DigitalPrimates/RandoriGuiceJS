@@ -79,8 +79,8 @@ namespace guice.reflection {
 
             object instance = null;
 
+            JsContext.JsCode("void('#RANDORI_IGNORE_BEGIN')");
             JsContext.JsCode(@" 
-//#RANDORI_IGNORE_BEGIN
     var f, c;
     c = this._type; // reference to class constructor function
     f = function(){}; // dummy function
@@ -88,9 +88,10 @@ namespace guice.reflection {
     instance = new f(); // instantiate dummy function to copy prototype properties
     c.apply(instance, args); // call class constructor, supplying new object as context
     instance.constructor = c; // assign correct constructor (not f)
-//#RANDORI_IGNORE_END
 ");
-           return instance;
+            JsContext.JsCode("void('#RANDORI_IGNORE_END')");
+
+            return instance;
         }
 
         public TypeDefinition( dynamic type ) {
