@@ -45,7 +45,7 @@ namespace guice {
             return instance;
         }
 
-        public InjectionClassBuilder(Injector injector, ClassResolver classResolver=null) {
+        public InjectionClassBuilder(Injector injector, ClassResolver classResolver) {
             this.injector = injector;
             this.classResolver = classResolver;
         }

@@ -42,7 +42,7 @@ namespace guice.loader {
                 throw new JsError("Cannot continue, missing required class " + qualifiedClassName);
             }
 
-            return xmlHttpRequest.responseText;
+            return ( xmlHttpRequest.responseText + "\n//@ sourceURL=" + potentialURL );
         }
 
         public SynchronousClassLoader(XMLHttpRequest xmlHttpRequest, JsString dynamicClassBaseUrl) {
