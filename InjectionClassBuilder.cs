@@ -18,7 +18,7 @@
  */
 using SharpKit.JavaScript;
 using guice.reflection;
-using guice.resolvers;
+using guice.resolver;
 
 namespace guice {
     [JsType(JsMode.Prototype, OmitCasts = true, NativeOverloads = false)]

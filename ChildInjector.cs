@@ -19,22 +19,22 @@
 
 using guice.binding;
 using guice.reflection;
-using guice.resolvers;
+using guice.resolver;
 
 namespace guice {
     public class ChildInjector : Injector {
         readonly Injector parentInjector;
 
-        internal override Binding getBinding(TypeDefinition typeDefinition) {
-            //First we try to resolve it on our own, without own binding
-            Binding binding = binder.getBinding(typeDefinition);
+        internal override AbstractBinding getBinding(TypeDefinition typeDefinition) {
+            //First we try to resolve it on our own, without own AbstractBinding
+            AbstractBinding abstractBinding = binder.getBinding(typeDefinition);
 
-            //if we do not have a specific binding for it, we need to check to see if our parent injector has a specific binding for it before we just go building stuff
-            if (binding == null) {
-                binding = parentInjector.getBinding(typeDefinition);
+            //if we do not have a specific AbstractBinding for it, we need to check to see if our parent injector has a specific AbstractBinding for it before we just go building stuff
+            if (abstractBinding == null) {
+                abstractBinding = parentInjector.getBinding(typeDefinition);
             }
 
-            return binding;
+            return abstractBinding;
         }
 
         public ChildInjector(Binder binder, ClassResolver classResolver, Injector parentInjector)

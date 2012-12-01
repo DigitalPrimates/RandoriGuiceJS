@@ -21,7 +21,7 @@ using System;
 using SharpKit.JavaScript;
 using guice.binding;
 using guice.reflection;
-using guice.resolvers;
+using guice.resolver;
 
 namespace guice {
 
@@ -38,7 +38,7 @@ namespace guice {
             return resolveDependency(dependencyTypeDefinition);
         }
 
-        internal virtual Binding getBinding( TypeDefinition typeDefinition ) {
+        internal virtual AbstractBinding getBinding( TypeDefinition typeDefinition ) {
             return binder.getBinding( typeDefinition );
         }
 
@@ -48,7 +48,7 @@ namespace guice {
             }
         }
 
-        //Entry point for TypeBinding to ask for a class.... 
+        //Entry point for TypeAbstractBinding to ask for a class.... 
         //This method does so without trying to resolve the class first, which is important if we are called from within a resolution
         public object buildClass(TypeDefinition typeDefinition) {
             JsArray<InjectionPoint> constructorPoints;
@@ -95,11 +95,11 @@ namespace guice {
         }
 
         object resolveDependency(TypeDefinition typeDefinition) {
-            Binding binding = getBinding(typeDefinition);
+            AbstractBinding abstractBinding = getBinding(typeDefinition);
             object instance;
 
-            if (binding != null) {
-                instance = binding.provide(this);
+            if (abstractBinding != null) {
+                instance = abstractBinding.provide(this);
             } else {
                 instance = buildClass(typeDefinition);
             }

@@ -21,7 +21,7 @@ using SharpKit.Html;
 using SharpKit.JavaScript;
 using guice.binding;
 using guice.loader;
-using guice.resolvers;
+using guice.resolver;
 
 namespace guice {
 

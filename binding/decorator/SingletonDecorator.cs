@@ -16,30 +16,18 @@
  * 
  * @author Michael Labriola <labriola@digitalprimates.net>
  */
+
 using SharpKit.JavaScript;
-using guice.reflection;
 
-namespace guice.binding {
+namespace guice.binding.decorator {
 
-    public class InstanceAbstractBinding : AbstractBinding {
-        readonly TypeDefinition typeDefinition;
-        readonly object instance;
-
-        override public JsString getTypeName() {
-            return typeDefinition.getClassName();
-        }
+    public class SingletonDecorator : ContextDecorator {
 
         override public Scope getScope() {
-            return Scope.Instance;
+            return Scope.Singleton;
         }
 
-        override public object provide(Injector injector) {
-            return instance;
-        }
-
-        public InstanceAbstractBinding(TypeDefinition typeDefinition, object instance) {
-            this.typeDefinition = typeDefinition;
-            this.instance = instance;
+        public SingletonDecorator(AbstractBinding abstractBinding) : base( abstractBinding ) {
         }
     }
 }

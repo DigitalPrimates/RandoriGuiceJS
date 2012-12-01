@@ -25,7 +25,7 @@ namespace guice.binding {
         public abstract object get();
     }
 
-    public class ProviderBinding : Binding {
+    public class ProviderAbstractBinding : AbstractBinding {
 
         readonly TypeDefinition typeDefinition;
         readonly TypeDefinition providerTypeDefinition;
@@ -34,6 +34,10 @@ namespace guice.binding {
 
         override public JsString getTypeName() {
             return typeDefinition.getClassName();
+        }
+
+        override public Scope getScope() {
+            return Scope.Instance;
         }
 
         override public object provide(Injector injector) {
@@ -45,7 +49,7 @@ namespace guice.binding {
             return provider.get();
         }
 
-        public ProviderBinding(TypeDefinition typeDefinition, TypeDefinition providerTypeDefinition) {
+        public ProviderAbstractBinding(TypeDefinition typeDefinition, TypeDefinition providerTypeDefinition) {
             this.typeDefinition = typeDefinition;
             this.providerTypeDefinition = providerTypeDefinition;
         }

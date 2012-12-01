@@ -44,16 +44,17 @@
   <ItemGroup>
     <Compile Include="binding\Binder.cs" />
     <Compile Include="binding\BindingFactory.cs" />
+    <Compile Include="binding\decorator\ContextDecorator.cs" />
     <Compile Include="binding\InstanceBinding.cs" />
     <Compile Include="binding\ProviderBinding.cs" />
-    <Compile Include="binding\SingletonDecorator.cs" />
+    <Compile Include="binding\decorator\SingletonDecorator.cs" />
     <Compile Include="binding\TypeBinding.cs" />
     <Compile Include="ChildInjector.cs" />
     <Compile Include="InjectionClassBuilder.cs" />
     <Compile Include="GuiceJS.cs" />
     <Compile Include="Injector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="resolvers\ClassResolver.cs" />
+    <Compile Include="resolver\ClassResolver.cs" />
     <Compile Include="reflection\TypeDefinition.cs" />
     <Compile Include="loader\SynchronousClassLoader.cs" />
   </ItemGroup>

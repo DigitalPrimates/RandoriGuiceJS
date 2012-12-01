@@ -21,7 +21,7 @@ using guice.reflection;
 
 namespace guice.binding {
 
-    public class TypeBinding : Binding {
+    public class TypeAbstractBinding : AbstractBinding {
         readonly TypeDefinition typeDefinition;
         readonly TypeDefinition dependencyDefinition;
 
@@ -29,11 +29,15 @@ namespace guice.binding {
             return typeDefinition.getClassName();
         }
 
+        override public Scope getScope() {
+            return Scope.Instance;
+        }
+
         override public object provide(Injector injector) {
             return injector.buildClass(dependencyDefinition);
         }
 
-        public TypeBinding(TypeDefinition typeDefinition, TypeDefinition dependencyDefinition) {
+        public TypeAbstractBinding(TypeDefinition typeDefinition, TypeDefinition dependencyDefinition) {
             this.typeDefinition = typeDefinition;
             this.dependencyDefinition = dependencyDefinition;
         }

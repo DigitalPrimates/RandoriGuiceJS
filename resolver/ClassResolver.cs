@@ -22,7 +22,7 @@ using SharpKit.JavaScript;
 using guice.loader;
 using guice.reflection;
 
-namespace guice.resolvers {
+namespace guice.resolver {
 
     public class ClassResolver {
         readonly SynchronousClassLoader loader;

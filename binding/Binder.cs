@@ -24,22 +24,37 @@ using guice.reflection;
 namespace guice.binding {
 
     [JsType(JsMode.Prototype, OmitCasts = true, Export=false, Name = "Object")]
-    public class BindingHashMap : JsObject<Binding> {
+    public class BindingHashMap : JsObject<AbstractBinding> {
     }
 
     public class Binder {
         readonly BindingHashMap hashMap;
 
-        public Binding getBinding( TypeDefinition typeDefinition ) {
+        public AbstractBinding getBinding( TypeDefinition typeDefinition ) {
             return hashMap[typeDefinition.getClassName()];
         }
 
-        public void addBinding( Binding binding ) {
-            hashMap[binding.getTypeName()] = binding;
+        public void addBinding( AbstractBinding abstractBinding ) {
+            hashMap[abstractBinding.getTypeName()] = abstractBinding;
         }
 
         public BindingFactory bind( Type type ) {
             var typeDefinition = new TypeDefinition(type);
+            AbstractBinding existingBinding = getBinding( typeDefinition );
+
+            //Do we already have a binding for this type?
+            if (existingBinding != null) {
+                /** Having a binding is actually not a problem, in most cases we accept that the last configured binding is the appropriate one
+                 * However, in the case of a Singleton, this could actually wreak some havoc on the system, especially if this is a child injector situation and we now
+                 * have multiple instances of a singleton..... SO, we throw an error if someone attempts to reconfigure a singleton. Incidentally, if you want your 
+                 * parent and child injectors to be able to override 'global-ish' singlteon like objects, use the Context scope or make your own object and use the 
+                 * instance binding. 
+                 **/
+                if ( existingBinding.getScope() == Scope.Singleton ) {
+                    throw new JsError("Overriding bindings for Singleton Scoped injections is not allowed.");
+                }
+            }
+
             var factory = new BindingFactory(this, typeDefinition );
             return factory;
         }

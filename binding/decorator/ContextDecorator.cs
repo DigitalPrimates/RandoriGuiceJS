@@ -15,30 +15,34 @@
  * 
  * 
  * @author Michael Labriola <labriola@digitalprimates.net>
- */ 
+ */
 
 using SharpKit.JavaScript;
 
-namespace guice.binding {
+namespace guice.binding.decorator {
 
-    public class SingletonDecorator : Binding {
-        readonly Binding sourceBinding;
+    public class ContextDecorator : AbstractBinding {
+        readonly AbstractBinding sourceAbstractBinding;
         object instance;
 
         override public JsString getTypeName() {
-            return sourceBinding.getTypeName();
+            return sourceAbstractBinding.getTypeName();
+        }
+
+        override public Scope getScope() {
+            return Scope.Context;
         }
 
         override public object provide(Injector injector) {
             if (instance == null) {
-                instance = sourceBinding.provide(injector);
+                instance = sourceAbstractBinding.provide(injector);
             }
 
             return instance;
         }
 
-        public SingletonDecorator(Binding binding) {
-            sourceBinding = binding;
+        public ContextDecorator(AbstractBinding abstractBinding) {
+            sourceAbstractBinding = abstractBinding;
         }
     }
 }
