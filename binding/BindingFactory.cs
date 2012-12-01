@@ -26,10 +26,11 @@ namespace guice.binding {
     /** Instance Scope mean it is an instance scope with no Guice rules governing the recreation of the object. So, Type & Provider bindings will be executed as requested.
      *  Instance bindings will always return the instance you configured, but you can reconfigure the instance binding in other contexts should you like.
      *  
-     *  Singleton scope guarantees that Guice will only provide a single instance of executed binding for the entire system
+     *  Singleton scope guarantees that guice will only provide a single instance of executed binding for the portions of the object graph under which the singleton is defined. In practice
+     *  if you define your singleton at the top level, it means all of the user created objects in the system.
      *  
-     *  Context scope guarantees that Guice will only provide a single instance of the executed binding within the Context, however, other contexts can redefine the binding. 
-     *  If your context does not define a binding, guicejs will inquire with parent contexts but not siblings.
+     *  Context scope guarantees that Guice will only provide a single instance of the executed binding within the Context. However, unlike singletons, other contexts can redefine the 
+     *  binding. If a child context does not redefine a binding, guicejs will inquire with parent contexts.
      **/
     [JsType(JsMode.Json)]
     public enum Scope { Instance, Singleton, Context };
