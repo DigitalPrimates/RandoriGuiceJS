@@ -50,7 +50,7 @@ namespace guice {
         }
 
         //This is a little evil and I am not sure I like it, but it is the best way we can provide bindings to a child injector for now.
-        public void configureInjector(Injector injector, GuiceModule module) {
+        public void configureInjector(ChildInjector injector, GuiceModule module) {
             injector.configureBinder( module );
         }
 

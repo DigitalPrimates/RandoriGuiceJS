@@ -25,6 +25,13 @@ namespace guice {
     public class ChildInjector : Injector {
         readonly Injector parentInjector;
 
+        //Used in a child injector situation to configure a binder with a module at runtime
+        internal void configureBinder(GuiceModule module) {
+            if (module != null) {
+                module.configure(binder);
+            }
+        }
+
         internal override AbstractBinding getBinding(TypeDefinition typeDefinition) {
             //First we try to resolve it on our own, without own AbstractBinding
             AbstractBinding abstractBinding = binder.getBinding(typeDefinition);

@@ -31,6 +31,13 @@ namespace guice.reflection {
         public dynamic v; //value, if it was given a default, only considered when r=0
     }
 
+    [JsType(JsMode.Prototype, OmitCasts = true, Export = false, Name = "Object")]
+    public class MethodInjectionPoint {
+        public JsString n; //name
+        public JsString t; //type as string
+        public JsArray<InjectionPoint> p; //each parameter
+    }
+
     public class TypeDefinition {
 
         readonly dynamic _type;
@@ -61,6 +68,10 @@ namespace guice.reflection {
             }
 
             return className;
+        }
+
+        public JsArray<MethodInjectionPoint> getInjectionMethods() {
+            return injectionPoints(InjectionTypes.Method).As<JsArray<MethodInjectionPoint>>();
         }
 
         public JsArray<InjectionPoint> getInjectionFields() {

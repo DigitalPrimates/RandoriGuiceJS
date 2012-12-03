@@ -33,6 +33,8 @@ namespace guice {
             return injector.getInstance(type);
         }
 
+        /*
+         * This was always a bad idea... i have simply finally talked myself out of it
         [JsMethod(NativeParams=false)]
         public object buildClass(JsString className, params object[] list) {
             object instance;
@@ -43,7 +45,7 @@ namespace guice {
             injector.injectMembers(instance);
             
             return instance;
-        }
+        }*/
 
         public InjectionClassBuilder(Injector injector, ClassResolver classResolver) {
             this.injector = injector;

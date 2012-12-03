@@ -42,25 +42,18 @@ namespace guice {
             return binder.getBinding( typeDefinition );
         }
 
-        internal void configureBinder( GuiceModule module ) {
-            if ( module != null ) {
-                module.configure( binder );
-            }
-        }
-
         //Entry point for TypeAbstractBinding to ask for a class.... 
         //This method does so without trying to resolve the class first, which is important if we are called from within a resolution
         public object buildClass(TypeDefinition typeDefinition) {
-            JsArray<InjectionPoint> constructorPoints;
-            JsArray<InjectionPoint> fieldPoints;
-            object instance;
 
-            constructorPoints = typeDefinition.getConstructorParameters();
-            instance = buildFromInjectionInfo(typeDefinition, constructorPoints);
+            var constructorPoints = typeDefinition.getConstructorParameters();
+            var instance = buildFromInjectionInfo(typeDefinition, constructorPoints);
 
-            fieldPoints = typeDefinition.getInjectionFields();
-            injectMembersFromInjectionInfo(instance, fieldPoints);
-            //injectMembersMethods( built, type );
+            var fieldPoints = typeDefinition.getInjectionFields();
+            injectMemberPropertiesFromInjectionInfo(instance, fieldPoints);
+
+            var methodPoints = typeDefinition.getInjectionMethods();
+            injectMembersMethodsFromInjectionInfo(instance, methodPoints);
 
             return instance;
         }
@@ -68,15 +61,17 @@ namespace guice {
         public void injectMembers(dynamic instance) {
             Type constructor = instance.constructor;
 
-            TypeDefinition dependency = new TypeDefinition( constructor );
-            JsArray<InjectionPoint> fieldPoints;
+            var typeDefinition = new TypeDefinition(constructor);
 
-            fieldPoints = dependency.getInjectionFields();
-            injectMembersFromInjectionInfo(instance, fieldPoints);
+            var fieldPoints = typeDefinition.getInjectionFields();
+            injectMemberPropertiesFromInjectionInfo(instance, fieldPoints);
+
+            var methodPoints = typeDefinition.getInjectionMethods();
+            injectMembersMethodsFromInjectionInfo(instance, methodPoints);
         }
 
         object buildFromInjectionInfo(TypeDefinition dependencyTypeDefinition, JsArray<InjectionPoint> constructorPoints) {
-            JsArray<object> args = new JsArray<object>();
+            var args = new JsArray<object>();
 
             for (int i = 0; i < constructorPoints.length; i++) {
                 args[i] = resolveDependency(classResolver.resolveClassName(constructorPoints[i].t));
@@ -86,11 +81,31 @@ namespace guice {
             return obj;
         }
 
-        void injectMembersFromInjectionInfo(object instance, JsArray<InjectionPoint> fieldPoints) {
-            JsObject instanceMap = instance.As<JsObject>();
+        void injectMemberPropertiesFromInjectionInfo(object instance, JsArray<InjectionPoint> fieldPoints) {
+            var instanceMap = instance.As<JsObject>();
 
-            for (int i = 0; i < fieldPoints.length; i++) {
+            for (var i = 0; i < fieldPoints.length; i++) {
                 instanceMap[fieldPoints[i].n] = resolveDependency(classResolver.resolveClassName(fieldPoints[i].t));
+            }
+        }
+
+//p.push({n:'builder', t:'behavior.EchoBehavior', p:'[{n:'builder', t:'guice.InjectionClassBuilder'}']});
+//p.push({n:'builderPlus', t:'behavior.EchoBehavior', p:'[{n:'builder', t:'guice.InjectionClassBuilder'}, {n:'resolver', t:'guice.resolver.ClassResolver'}']});
+
+        void injectMembersMethodsFromInjectionInfo(object instance, JsArray<MethodInjectionPoint> methodPoints) {
+            var instanceMap = instance.As<JsObject>();
+
+            for (var i = 0; i < methodPoints.length; i++) {
+                var methodPoint = methodPoints[i];
+                var args = new JsArray<object>();
+
+                for (var j = 0; j < methodPoint.p.length; j++) {
+                    var parameterPoint = methodPoint.p[j];
+                    args[j] = resolveDependency(classResolver.resolveClassName(parameterPoint.t));
+                }
+
+                var action = instanceMap[methodPoints[i].n].As<JsFunction>();
+                action.apply(instance, args);
             }
         }
 

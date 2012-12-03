@@ -74,9 +74,9 @@ namespace guice.binding {
         }
 
         AbstractBinding withDecoration( AbstractBinding abstractBinding ) {
-            if (scope == Scope.Singleton) {
-                abstractBinding = new SingletonDecorator(abstractBinding);
-            } else if (scope == Scope.Context ) {
+            if (scope == Scope.Context) {
+                abstractBinding = new ContextDecorator(abstractBinding);
+            } else if (scope == Scope.Singleton ) {
                 abstractBinding = new SingletonDecorator(abstractBinding);
             }
 
