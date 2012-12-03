@@ -48,9 +48,23 @@ namespace guice.resolver {
                     HtmlContext.alert(qualifiedClassName + " does not contain required injection information ");
                     throw new JsError(qualifiedClassName + " does not contain required injection information ");
                 }
+
+                var td = new TypeDefinition(type);
+                if (!td.builtIn) {
+                    //Finally, resolve any classes it references in its own code execution
+                    resolveClassDependencies(td);
+                }
             }
 
             return new TypeDefinition(type);
+        }
+
+        private void resolveClassDependencies(TypeDefinition type) {
+            var classDependencies = type.getClassDependencies();
+
+            for ( var i=0; i<classDependencies.length; i++) {
+                resolveClassName(classDependencies[i]);
+            }
         }
 
         private void resolveParentClassFromDefinition(JsString qualifiedClassName, JsString classDefinition) {

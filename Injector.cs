@@ -45,15 +45,20 @@ namespace guice {
         //Entry point for TypeAbstractBinding to ask for a class.... 
         //This method does so without trying to resolve the class first, which is important if we are called from within a resolution
         public object buildClass(TypeDefinition typeDefinition) {
+            object instance;
 
-            var constructorPoints = typeDefinition.getConstructorParameters();
-            var instance = buildFromInjectionInfo(typeDefinition, constructorPoints);
+            if (typeDefinition.builtIn) {
+                instance = typeDefinition.constructorApply(null);
+            } else {
+                var constructorPoints = typeDefinition.getConstructorParameters();
+                instance = buildFromInjectionInfo(typeDefinition, constructorPoints);
 
-            var fieldPoints = typeDefinition.getInjectionFields();
-            injectMemberPropertiesFromInjectionInfo(instance, fieldPoints);
+                var fieldPoints = typeDefinition.getInjectionFields();
+                injectMemberPropertiesFromInjectionInfo(instance, fieldPoints);
 
-            var methodPoints = typeDefinition.getInjectionMethods();
-            injectMembersMethodsFromInjectionInfo(instance, methodPoints);
+                var methodPoints = typeDefinition.getInjectionMethods();
+                injectMembersMethodsFromInjectionInfo(instance, methodPoints);
+            }
 
             return instance;
         }
@@ -110,7 +115,12 @@ namespace guice {
         }
 
         object resolveDependency(TypeDefinition typeDefinition) {
-            AbstractBinding abstractBinding = getBinding(typeDefinition);
+            AbstractBinding abstractBinding = null;
+            
+            if ( !typeDefinition.builtIn ) {
+                abstractBinding = getBinding(typeDefinition);
+            }
+            
             object instance;
 
             if (abstractBinding != null) {

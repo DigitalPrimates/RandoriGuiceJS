@@ -41,9 +41,14 @@ namespace guice.reflection {
     public class TypeDefinition {
 
         readonly dynamic _type;
+        readonly bool _builtIn = false;
 
         public dynamic type { 
             get { return _type; }
+        }
+
+        public bool builtIn {
+            get { return _builtIn; }
         }
 
         private JsArray<InjectionPoint> injectionPoints(InjectionTypes injectionType) {
@@ -68,6 +73,10 @@ namespace guice.reflection {
             }
 
             return className;
+        }
+
+        public JsArray<JsString> getClassDependencies() {
+            return this._type.getClassDependencies();
         }
 
         public JsArray<MethodInjectionPoint> getInjectionMethods() {
@@ -111,6 +120,12 @@ namespace guice.reflection {
             }
 
             this._type = type;
+
+            //We add data to all of our Types. So, if this is not one of our types, then we assume it is a built in or
+            //externally defined. We dont want to spend much time trying to parse those
+            if ( type.injectionPoints == null ) {
+                this._builtIn = true;
+            }
         }
     }
 }
