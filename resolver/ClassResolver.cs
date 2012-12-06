@@ -71,7 +71,7 @@ namespace guice.resolver {
             //\$Inherit\(net.digitalprimates.service.LabelService,([\w\W]*?)\)
             JsString inheritString = @"\$Inherit\(";
             inheritString += qualifiedClassName;
-            inheritString += @",\s*([\w\W]*?)\)";
+            inheritString += @",\s*(.*?)\)";
             JsRegExpResult inheritResult = classDefinition.match(inheritString);
 
             //Do we inherit from anything?
