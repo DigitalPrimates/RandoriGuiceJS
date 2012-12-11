@@ -105,7 +105,7 @@ namespace guice.reflection {
             JsContext.JsCode("void('#RANDORI_IGNORE_BEGIN')");
             JsContext.JsCode(@" 
 if ( this._builtIn ) {
-    instance = eval('new this.type()');
+    instance = new this.type();
 } else {
     var f, c;
     c = this.type; // reference to class constructor function
