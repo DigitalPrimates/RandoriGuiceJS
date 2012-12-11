@@ -84,7 +84,15 @@ namespace guice.resolver {
         private object findDefinition(JsString qualifiedClassName) {
             dynamic nextLevel = HtmlContext.window;
             var failed = false;
-            var path = qualifiedClassName.split('.');
+            JsString realName = "";
+
+            if ( qualifiedClassName.substr(0,14) == "SharpKit.Html.") {
+                realName = qualifiedClassName.substr(14);
+            } else {
+                realName = qualifiedClassName;
+            }
+
+            var path = realName.split('.');
 
             for (var i = 0; i < path.length; i++) {
                 nextLevel = nextLevel[path[i]];

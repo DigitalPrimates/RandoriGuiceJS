@@ -40,23 +40,25 @@ namespace guice.reflection {
 
     public class TypeDefinition {
 
-        readonly dynamic _type;
+        public readonly dynamic type;
         readonly bool _builtIn = false;
 
+        /**Would love to have a setter... dynamic getter/setters do not work**/
+        /*
         public dynamic type { 
             get { return _type; }
-        }
+        }*/
 
         public bool builtIn {
             get { return _builtIn; }
         }
 
         private JsArray<InjectionPoint> injectionPoints(InjectionTypes injectionType) {
-            return this._type.injectionPoints(injectionType);
+            return this.type.injectionPoints(injectionType);
         }
 
         public JsString getClassName() {
-            JsString className = _type.className;
+            JsString className = type.className;
 
             if (className == JsContext.undefined ) {
                 throw new JsError("Class not does defined a usable className");
@@ -66,7 +68,7 @@ namespace guice.reflection {
         }
 
         public JsString getSuperClassName() {
-            JsString className = _type.superClassName;
+            JsString className = type.superClassName;
 
             if (className == JsContext.undefined) {
                 className = "Object";
@@ -76,7 +78,7 @@ namespace guice.reflection {
         }
 
         public JsArray<JsString> getClassDependencies() {
-            return this._type.getClassDependencies();
+            return this.type.getClassDependencies();
         }
 
         public JsArray<MethodInjectionPoint> getInjectionMethods() {
@@ -99,15 +101,20 @@ namespace guice.reflection {
 
             object instance = null;
 
+
             JsContext.JsCode("void('#RANDORI_IGNORE_BEGIN')");
             JsContext.JsCode(@" 
+if ( this._builtIn ) {
+    instance = eval('new this.type()');
+} else {
     var f, c;
-    c = this._type; // reference to class constructor function
+    c = this.type; // reference to class constructor function
     f = function(){}; // dummy function
     f.prototype = c.prototype; // reference same prototype
     instance = new f(); // instantiate dummy function to copy prototype properties
     c.apply(instance, args); // call class constructor, supplying new object as context
     instance.constructor = c; // assign correct constructor (not f)
+}
 ");
             JsContext.JsCode("void('#RANDORI_IGNORE_END')");
 
@@ -119,7 +126,7 @@ namespace guice.reflection {
                 throw new JsError("Cannot build class injection of primitives not supported at this time ");
             }
 
-            this._type = type;
+            this.type = type;
 
             //We add data to all of our Types. So, if this is not one of our types, then we assume it is a built in or
             //externally defined. We dont want to spend much time trying to parse those
