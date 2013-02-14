@@ -23,10 +23,10 @@ using SharpKit.JavaScript;
 namespace guice.loader {
 
     public class SynchronousClassLoader {
-        readonly XMLHttpRequest xmlHttpRequest;
+        readonly protected XMLHttpRequest xmlHttpRequest;
         readonly JsString dynamicClassBaseUrl;
 
-        public string loadClass( JsString qualifiedClassName ) {
+        public virtual string loadClass( JsString qualifiedClassName ) {
             JsRegExp classNameRegex = new JsRegExp("\\.", "g");
             var potentialURL = qualifiedClassName.replace(classNameRegex, "/");
             potentialURL = dynamicClassBaseUrl + potentialURL;
