@@ -101,22 +101,19 @@ namespace guice.reflection {
 
             object instance = null;
 
-
-            JsContext.JsCode("void('#RANDORI_IGNORE_BEGIN')");
             JsContext.JsCode(@" 
-if ( this._builtIn ) {
-    instance = new this.type();
-} else {
-    var f, c;
-    c = this.type; // reference to class constructor function
-    f = function(){}; // dummy function
-    f.prototype = c.prototype; // reference same prototype
-    instance = new f(); // instantiate dummy function to copy prototype properties
-    c.apply(instance, args); // call class constructor, supplying new object as context
-    instance.constructor = c; // assign correct constructor (not f)
-}
-");
-            JsContext.JsCode("void('#RANDORI_IGNORE_END')");
+                            if ( this._builtIn ) {
+                                instance = new this.type();
+                            } else {
+                                var f, c;
+                                c = this.type; // reference to class constructor function
+                                f = function(){}; // dummy function
+                                f.prototype = c.prototype; // reference same prototype
+                                instance = new f(); // instantiate dummy function to copy prototype properties
+                                c.apply(instance, args); // call class constructor, supplying new object as context
+                                instance.constructor = c; // assign correct constructor (not f)
+                            }
+                            ");
 
             return instance;
         }
