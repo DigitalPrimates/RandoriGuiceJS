@@ -5,11 +5,11 @@ using SharpKit.JavaScript;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RandoriGuiceJS")]
+[assembly: AssemblyTitle("RandoriGuice")]
 [assembly: AssemblyDescription("JavaScript implemention of the Google Guice project to work with Randori metadata")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("LTN Consulting, Inc. /dba Digital Primates®")]
-[assembly: AssemblyProduct("RandoriGuiceJS")]
+[assembly: AssemblyProduct("RandoriGuice")]
 [assembly: AssemblyCopyright("Copyright ©  2012 LTN Consulting dba/ Digital Primates® 2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

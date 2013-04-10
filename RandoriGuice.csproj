@@ -37,7 +37,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <SkcPlugin Include="net.digitalPrimates.GuiceMetadataPlugin, RandoriSharpKitExtensions">
+    <SkcPlugin Include="randori.compiler.RandoriCompilerPlugin, RandoriCompilerPlugin">
       <InProject>false</InProject>
     </SkcPlugin>
   </ItemGroup>
